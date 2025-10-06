@@ -3,7 +3,7 @@
 import { Calculator, Heart, RefreshCw, Search, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Calculator, Heart, RefreshCw, Search, X } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { useState } from "react"
 
 interface CryptoHeaderProps {
@@ -35,9 +35,9 @@ export function CryptoHeader({
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">CT</span>
+              <span className="text-primary-foreground font-bold text-sm">₿</span>
             </div>
-            <h1 className="text-lg sm:text-xl font-bold text-balance">Crypto Tracker</h1>
+            <h1 className="text-lg sm:text-xl font-bold text-balance">CryptoTracker Pro</h1>
           </div>
 
           {/* Desktop Search */}
