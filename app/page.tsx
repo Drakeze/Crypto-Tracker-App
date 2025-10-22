@@ -18,7 +18,7 @@ export default function HomePage() {
   const [showCalculator, setShowCalculator] = useState(false)
   const [showFavorites, setShowFavorites] = useState(false)
   const [cryptoData, setCryptoData] = useState<CryptoData[]>([])
-  const [sortBy, setSortBy] = useState("rank")
+  const [sortBy, setSortBy] = useState("market_cap_rank")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -105,18 +105,22 @@ export default function HomePage() {
           bValue = b.name.toLowerCase()
           break
         case "price":
+        case "current_price":
           aValue = a.price
           bValue = b.price
           break
         case "change24h":
+        case "price_change_percentage_24h":
           aValue = a.change24h
           bValue = b.change24h
           break
         case "marketCap":
+        case "market_cap":
           aValue = a.marketCap
           bValue = b.marketCap
           break
         case "rank":
+        case "market_cap_rank":
         default:
           aValue = a.rank
           bValue = b.rank
@@ -218,7 +222,7 @@ export default function HomePage() {
           <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto text-pretty px-4">
             {showFavorites
               ? `Track your ${favorites.length} favorite cryptocurrencies and their performance.`
-              : "Track the latest prices, market caps, and rankings of the top 100 cryptocurrencies. Stay informed with real-time data and powerful tools."}
+              : "Track the latest prices, market caps, and rankings of the top 200 cryptocurrencies. Stay informed with real-time data and powerful tools."}
           </p>
           <div className="mt-4 flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <Wifi className={`h-4 w-4 ${isOnline ? "text-green-500" : "text-orange-500"}`} />
