@@ -20,7 +20,7 @@ export interface CoinGeckoResponse {
   price_change_percentage_24h: number
 }
 
-const COINGECKO_API_BASE = "https://api.coingecko.com/api/v3"
+const COINGECKO_API_BASE = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=200&page=1&sparkline=false"
 
 // Map of crypto symbols to CoinGecko IDs for better API calls
 const CRYPTO_ID_MAP: Record<string, string> = {
