@@ -46,7 +46,7 @@ export async function fetchCryptoData(): Promise<CryptoData[]> {
     console.log("[v0] Fetching crypto data from CoinGecko API...")
 
     const response = await fetch(
-      `${COINGECKO_API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h`,
+      `${COINGECKO_API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=200&page=1&sparkline=false&price_change_percentage=24h`,
       {
         headers: {
           Accept: "application/json",

@@ -1,0 +1,7 @@
+{
+  "name": "eslint-config-next",
+  "version": "14.2.16",
+  "main": "index.js",
+  "description": "Stub Next.js ESLint config for offline linting",
+  "license": "MIT"
+}

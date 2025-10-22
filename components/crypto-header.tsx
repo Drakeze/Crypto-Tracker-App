@@ -1,6 +1,6 @@
 "use client"
 
-import { Calculator, Heart, RefreshCw, Search, X } from "lucide-react"
+import { Calculator, Heart, Loader2, RefreshCw, Search, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -79,13 +79,19 @@ export function CryptoHeader({
           <div className="flex items-center gap-1 sm:gap-2">
             <Button
               variant="outline"
-              size="icon"
               onClick={onRefresh}
               disabled={isRefreshing}
-              className="h-9 w-9 bg-transparent"
+              className="h-9 px-3 bg-transparent flex items-center gap-2"
             >
-              <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
-              <span className="sr-only">Refresh data</span>
+              {isRefreshing ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <RefreshCw className="h-4 w-4" />
+              )}
+              <span className="hidden sm:inline text-sm font-medium">
+                {isRefreshing ? "Refreshing..." : "Refresh"}
+              </span>
+              <span className="sr-only">{isRefreshing ? "Refreshing data" : "Refresh data"}</span>
             </Button>
 
             <Button
@@ -110,6 +116,10 @@ export function CryptoHeader({
 
             <ThemeToggle />
           </div>
+        </div>
+
+        <div aria-live="polite" className="sr-only">
+          {isRefreshing ? "Refreshing cryptocurrency data" : "Cryptocurrency data is up to date"}
         </div>
 
         {/* Mobile Search Bar */}

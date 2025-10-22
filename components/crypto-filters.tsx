@@ -15,11 +15,11 @@ interface CryptoFiltersProps {
 
 export function CryptoFilters({ sortBy, sortOrder, onSortChange, totalResults, showingFavorites }: CryptoFiltersProps) {
   const sortOptions = [
-    { value: "rank", label: "Rank" },
+    { value: "market_cap_rank", label: "Rank" },
+    { value: "current_price", label: "Price" },
+    { value: "market_cap", label: "Market Cap" },
     { value: "name", label: "Name" },
-    { value: "price", label: "Price" },
-    { value: "change24h", label: "24h Change" },
-    { value: "marketCap", label: "Market Cap" },
+    { value: "price_change_percentage_24h", label: "24h Change" },
   ]
 
   const currentSortLabel = sortOptions.find((option) => option.value === sortBy)?.label || "Rank"
