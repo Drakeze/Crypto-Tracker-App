@@ -66,8 +66,7 @@ export default function HomePage() {
     console.log("[v0] Refreshing crypto data...")
 
     try {
-      const data = await fetchCryptoData()
-      setCryptoData(data)
+      await loadCryptoData()
       setError(null)
       console.log("[v0] Crypto data refreshed successfully")
     } catch (err) {
