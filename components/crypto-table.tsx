@@ -3,6 +3,7 @@ import { Heart, TrendingUp, TrendingDown, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { MiniSparkline } from "@/components/mini-sparkline"
 
 export interface CryptoData {
   id: number
@@ -15,6 +16,7 @@ export interface CryptoData {
   change7d: number
   rank: number
   coinGeckoId: string
+  sparkline7d?: number[]
 }
 
 interface CryptoTableProps {
@@ -51,7 +53,7 @@ export function CryptoTable({ cryptos, favorites, onToggleFavorite }: CryptoTabl
         {isPositive ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
         <span className="font-medium">
           {isPositive ? "+" : ""}
-          {change.toFixed(2)}%
+          {typeof change === "number" ? change.toFixed(2) : "0.00"}%
         </span>
       </div>
     )
@@ -61,11 +63,11 @@ export function CryptoTable({ cryptos, favorites, onToggleFavorite }: CryptoTabl
     <div className="space-y-4">
       {/* Desktop Table View */}
       <div className="hidden md:block">
-        <Card className="overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-muted/50">
-                <tr className="border-b">
+        <Card className="overflow-hidden rounded-lg border border-border">
+          <div className="w-full overflow-x-auto">
+            <table className="min-w-full border-collapse">
+              <thead className="bg-muted/50 text-sm font-semibold text-foreground rounded-t-lg">
+                <tr className="border-b border-border">
                   <th className="text-left p-4 font-semibold text-sm">Rank</th>
                   <th className="text-left p-4 font-semibold text-sm">Name</th>
                   <th className="text-right p-4 font-semibold text-sm">Price</th>
@@ -80,7 +82,7 @@ export function CryptoTable({ cryptos, favorites, onToggleFavorite }: CryptoTabl
                 {cryptos.map((crypto) => {
                   const isFavorited = favorites.includes(crypto.id)
                   return (
-                    <tr key={crypto.id} className="border-b hover:bg-muted/30 transition-colors">
+                    <tr key={crypto.id} className="border-b last:border-0 hover:bg-muted/30 transition-colors">
                       <td className="p-4">
                         <div className="flex items-center gap-2">
                           <Badge variant="secondary" className="font-mono">
@@ -108,6 +110,9 @@ export function CryptoTable({ cryptos, favorites, onToggleFavorite }: CryptoTabl
                       <td className="p-4 text-right">{formatChange(crypto.change24h)}</td>
                       <td className="p-4 text-right">{formatChange(crypto.change7d)}</td>
                       <td className="p-4 text-right font-mono font-medium">{formatMarketCap(crypto.marketCap)}</td>
+                      <td className="p-4 text-right">
+                        <MiniSparkline data={crypto.sparkline7d || []} />
+                      </td>
                       <td className="p-4 text-center">
                         <Button
                           variant="ghost"

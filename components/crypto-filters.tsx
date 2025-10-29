@@ -2,7 +2,12 @@
 
 import { ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
 
 interface CryptoFiltersProps {
@@ -22,18 +27,18 @@ export function CryptoFilters({
 }: CryptoFiltersProps) {
   const sortOptions = [
     { value: "market_cap_rank", label: "Rank" },
-    { value: "current_price", label: "Price" },
-    { value: "market_cap", label: "Market Cap" },
     { value: "name", label: "Name" },
-    {value: "price_change_percentage_1h", label: "1h Change" },
-    { value: "price_change_percentage_24h", label: "24h Change" },
-    { value: "price_change_percentage_7d", label: "7d Change" },
+    { value: "current_price", label: "Price" },
+    { value: "price_change_percentage_1h_in_currency", label: "1h Change" },
+    { value: "price_change_percentage_24h_in_currency", label: "24h Change" },
+    { value: "price_change_percentage_7d_in_currency", label: "7d Change" },
+    { value: "market_cap", label: "Market Cap" },
   ]
 
-  const currentSortLabel = sortOptions.find((option) => option.value === sortBy)?.label || "Rank"
+  const currentSortLabel =
+    sortOptions.find((option) => option.value === sortBy)?.label || "Rank"
 
   const handleSortChange = (selectedValue: string) => {
-    // If the same option is clicked, toggle between asc/desc
     const newOrder =
       sortBy === selectedValue && sortOrder === "asc" ? "desc" : "asc"
     onSortChange(selectedValue, newOrder)
@@ -51,7 +56,9 @@ export function CryptoFilters({
 
       {/* Sort Dropdown */}
       <div className="flex items-center gap-2 w-full sm:w-auto">
-        <span className="text-sm text-muted-foreground hidden sm:inline">Sort by:</span>
+        <span className="text-sm text-muted-foreground hidden sm:inline">
+          Sort by:
+        </span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -73,7 +80,7 @@ export function CryptoFilters({
               <DropdownMenuItem
                 key={option.value}
                 onClick={() => handleSortChange(option.value)}
-                className="flex items-center justify-between cursor-pointer"
+                className="flex items-center justify-between cursor-pointer hover:bg-muted/40"
               >
                 <span>{option.label}</span>
                 {sortBy === option.value && (

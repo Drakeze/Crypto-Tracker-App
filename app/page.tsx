@@ -112,6 +112,14 @@ export default function HomePage() {
           aValue = a.change24h
           bValue = b.change24h
           break
+        case "price_change_percentage_1h_in_currency":
+          aValue = a.price_change_percentage_1h_in_currency ?? 0
+          bValue = b.price_change_percentage_1h_in_currency ?? 0
+          break
+        case "price_change_percentage_7d_in_currency":
+          aValue = a.price_change_percentage_7d_in_currency ?? 0
+          bValue = b.price_change_percentage_7d_in_currency ?? 0
+          break
         case "marketCap":
         case "market_cap":
           aValue = a.marketCap
@@ -163,7 +171,7 @@ export default function HomePage() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center mx-auto mb-4">
-            <span className="text-primary-foreground font-bold text-sm">₿</span>
+            <span className="text-primary-foreground font-bold text-sm">ST ₿</span>
           </div>
           <p className="text-muted-foreground">
             {isLoading ? "Loading live cryptocurrency data..." : "Loading CryptoTracker Pro..."}
@@ -228,15 +236,23 @@ export default function HomePage() {
           </div>
         </div>
 
-        <CryptoFilters
-          sortBy={sortBy}
-          sortOrder={sortOrder}
-          onSortChange={handleSortChange}
-          totalResults={filteredAndSortedCryptos.length}
-          showingFavorites={showFavorites}
-        />
+        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <CryptoFilters
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+            onSortChange={handleSortChange}
+            totalResults={filteredAndSortedCryptos.length}
+            showingFavorites={showFavorites}
+          />
+        </div>
 
-        <CryptoTable cryptos={paginatedCryptos} favorites={favorites} onToggleFavorite={toggleFavorite} />
+        <div className="overflow-x-auto rounded-lg border border-border bg-background shadow-sm">
+          <CryptoTable
+            cryptos={paginatedCryptos}
+            favorites={favorites}
+            onToggleFavorite={toggleFavorite}
+          />
+        </div>
 
         <CryptoPagination
           currentPage={currentPage}
