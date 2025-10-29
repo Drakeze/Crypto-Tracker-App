@@ -113,12 +113,12 @@ export default function HomePage() {
           bValue = b.change24h
           break
         case "price_change_percentage_1h_in_currency":
-          aValue = a.price_change_percentage_1h_in_currency ?? 0
-          bValue = b.price_change_percentage_1h_in_currency ?? 0
+          aValue = a.change1h
+          bValue = b.change1h
           break
         case "price_change_percentage_7d_in_currency":
-          aValue = a.price_change_percentage_7d_in_currency ?? 0
-          bValue = b.price_change_percentage_7d_in_currency ?? 0
+          aValue = a.change7d
+          bValue = b.change7d
           break
         case "marketCap":
         case "market_cap":
