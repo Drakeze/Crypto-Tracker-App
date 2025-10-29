@@ -19,7 +19,9 @@ export function CryptoFilters({ sortBy, sortOrder, onSortChange, totalResults, s
     { value: "current_price", label: "Price" },
     { value: "market_cap", label: "Market Cap" },
     { value: "name", label: "Name" },
+    {value: "price_change_percentage_1h", label: "1h Change" },
     { value: "price_change_percentage_24h", label: "24h Change" },
+    { value: "price_change_percentage_7d", label: "7d Change" },
   ]
 
   const currentSortLabel = sortOptions.find((option) => option.value === sortBy)?.label || "Rank"

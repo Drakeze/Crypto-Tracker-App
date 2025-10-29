@@ -25,7 +25,6 @@ export default function HomePage() {
   const [isOnline, setIsOnline] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(25)
-
   const { favorites, toggleFavorite, isLoaded } = useFavorites()
 
   useEffect(() => {

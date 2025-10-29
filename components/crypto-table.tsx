@@ -11,6 +11,8 @@ export interface CryptoData {
   price: number
   marketCap: number
   change24h: number
+  change1h: number
+  change7d: number
   rank: number
   coinGeckoId: string
 }
@@ -67,7 +69,9 @@ export function CryptoTable({ cryptos, favorites, onToggleFavorite }: CryptoTabl
                   <th className="text-left p-4 font-semibold text-sm">Rank</th>
                   <th className="text-left p-4 font-semibold text-sm">Name</th>
                   <th className="text-right p-4 font-semibold text-sm">Price</th>
+                  <th className="text-right p-4 font-semibold text-sm">1h Change</th>
                   <th className="text-right p-4 font-semibold text-sm">24h Change</th>
+                  <th className="text-right p-4 font-semibold text-sm">7d Change</th>
                   <th className="text-right p-4 font-semibold text-sm">Market Cap</th>
                   <th className="text-center p-4 font-semibold text-sm">Favorite</th>
                 </tr>
@@ -100,7 +104,9 @@ export function CryptoTable({ cryptos, favorites, onToggleFavorite }: CryptoTabl
                         </div>
                       </td>
                       <td className="p-4 text-right font-mono font-semibold">{formatPrice(crypto.price)}</td>
+                      <td className="p-4 text-right">{formatChange(crypto.change1h)}</td>
                       <td className="p-4 text-right">{formatChange(crypto.change24h)}</td>
+                      <td className="p-4 text-right">{formatChange(crypto.change7d)}</td>
                       <td className="p-4 text-right font-mono font-medium">{formatMarketCap(crypto.marketCap)}</td>
                       <td className="p-4 text-center">
                         <Button
@@ -178,8 +184,16 @@ export function CryptoTable({ cryptos, favorites, onToggleFavorite }: CryptoTabl
                   <div className="font-mono font-semibold">{formatPrice(crypto.price)}</div>
                 </div>
                 <div>
+                  <div className="text-muted-foreground text-xs mb-1">1h Change</div>
+                  {formatChange(crypto.change1h)}
+                </div>
+                <div>
                   <div className="text-muted-foreground text-xs mb-1">24h Change</div>
                   {formatChange(crypto.change24h)}
+                </div>
+                <div>
+                  <div className="text-muted-foreground text-xs mb-1">7d Change</div>
+                  {formatChange(crypto.change7d)}
                 </div>
                 <div className="col-span-2">
                   <div className="text-muted-foreground text-xs mb-1">Market Cap</div>
