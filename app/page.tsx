@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { fetchCryptoData } from "@/lib/crypto-api"
 import { AlertCircle, Wifi, WifiOff } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { resolveSortValue, type SortKey } from "@/lib/sort-utils"
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -18,7 +19,7 @@ export default function HomePage() {
   const [showCalculator, setShowCalculator] = useState(false)
   const [showFavorites, setShowFavorites] = useState(false)
   const [cryptoData, setCryptoData] = useState<CryptoData[]>([])
-  const [sortBy, setSortBy] = useState("market_cap_rank")
+  const [sortBy, setSortBy] = useState<SortKey>("market_cap_rank")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -76,7 +77,7 @@ export default function HomePage() {
     }
   }
 
-  const handleSortChange = (newSortBy: string, newSortOrder: "asc" | "desc") => {
+  const handleSortChange = (newSortBy: SortKey, newSortOrder: "asc" | "desc") => {
     setSortBy(newSortBy)
     setSortOrder(newSortOrder)
   }
@@ -94,44 +95,8 @@ export default function HomePage() {
 
     // Sort the filtered results
     filtered.sort((a, b) => {
-      let aValue: number | string
-      let bValue: number | string
-
-      switch (sortBy) {
-        case "name":
-          aValue = a.name.toLowerCase()
-          bValue = b.name.toLowerCase()
-          break
-        case "price":
-        case "current_price":
-          aValue = a.price
-          bValue = b.price
-          break
-        case "change24h":
-        case "price_change_percentage_24h":
-          aValue = a.change24h
-          bValue = b.change24h
-          break
-        case "price_change_percentage_1h_in_currency":
-          aValue = a.change1h
-          bValue = b.change1h
-          break
-        case "price_change_percentage_7d_in_currency":
-          aValue = a.change7d
-          bValue = b.change7d
-          break
-        case "marketCap":
-        case "market_cap":
-          aValue = a.marketCap
-          bValue = b.marketCap
-          break
-        case "rank":
-        case "market_cap_rank":
-        default:
-          aValue = a.rank
-          bValue = b.rank
-          break
-      }
+      const aValue = resolveSortValue(a, sortBy)
+      const bValue = resolveSortValue(b, sortBy)
 
       if (typeof aValue === "string" && typeof bValue === "string") {
         return sortOrder === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)

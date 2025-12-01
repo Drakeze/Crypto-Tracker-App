@@ -9,11 +9,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
+import type { SortKey } from "@/lib/sort-utils"
 
 interface CryptoFiltersProps {
-  sortBy: string
+  sortBy: SortKey
   sortOrder: "asc" | "desc"
-  onSortChange: (sortBy: string, sortOrder: "asc" | "desc") => void
+  onSortChange: (sortBy: SortKey, sortOrder: "asc" | "desc") => void
   totalResults: number
   showingFavorites: boolean
 }
@@ -25,12 +26,12 @@ export function CryptoFilters({
   totalResults,
   showingFavorites,
 }: CryptoFiltersProps) {
-  const sortOptions = [
+  const sortOptions: { value: SortKey; label: string }[] = [
     { value: "market_cap_rank", label: "Rank" },
     { value: "name", label: "Name" },
     { value: "current_price", label: "Price" },
     { value: "price_change_percentage_1h_in_currency", label: "1h Change" },
-    { value: "price_change_percentage_24h_in_currency", label: "24h Change" },
+    { value: "price_change_percentage_24h", label: "24h Change" },
     { value: "price_change_percentage_7d_in_currency", label: "7d Change" },
     { value: "market_cap", label: "Market Cap" },
   ]
@@ -38,7 +39,7 @@ export function CryptoFilters({
   const currentSortLabel =
     sortOptions.find((option) => option.value === sortBy)?.label || "Rank"
 
-  const handleSortChange = (selectedValue: string) => {
+  const handleSortChange = (selectedValue: SortKey) => {
     const newOrder =
       sortBy === selectedValue && sortOrder === "asc" ? "desc" : "asc"
     onSortChange(selectedValue, newOrder)
