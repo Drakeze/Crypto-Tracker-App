@@ -1,17 +1,34 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
+import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Suspense } from "react"
 import "./globals.css"
 
+const _geist = Geist({ subsets: ["latin"] })
+const _geistMono = Geist_Mono({ subsets: ["latin"] })
+
 export const metadata: Metadata = {
-  title: "CryptoTracker Pro - Real-time Cryptocurrency Tracker",
+  title: "CryptoTracker Pro - Real-time Cryptocurrency Market Data",
   description:
-    "Track cryptocurrency prices, market caps, and rankings in real-time with favorites and calculator features.",
+    "Track 300+ cryptocurrencies with real-time prices, market caps, and 7-day sparklines. Professional SaaS-style crypto dashboard.",
   generator: "v0.app",
+  icons: {
+    icon: [
+      {
+        url: "/icon-light-32x32.png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/icon-dark-32x32.png",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/icon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    apple: "/apple-icon.png",
+  },
 }
 
 export default function RootLayout({
@@ -20,11 +37,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <Suspense>{children}</Suspense>
-        </ThemeProvider>
+    <html lang="en">
+      <body className={`font-sans antialiased`}>
+        {children}
         <Analytics />
       </body>
     </html>
