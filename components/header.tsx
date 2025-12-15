@@ -11,6 +11,7 @@ interface HeaderProps {
   onCalculatorOpen: () => void
   isDarkMode: boolean
   onThemeToggle: () => void
+  isRefreshing: boolean
 }
 
 export function Header({
@@ -20,14 +21,8 @@ export function Header({
   onCalculatorOpen,
   isDarkMode,
   onThemeToggle,
+  isRefreshing,
 }: HeaderProps) {
-  const handleRefresh = () => {
-    const btn = document.getElementById("refresh-btn")
-    btn?.classList.add("animate-spin")
-    onRefresh()
-    setTimeout(() => btn?.classList.remove("animate-spin"), 1000)
-  }
-
   return (
     <header className="border-b border-gray-200 bg-white">
       <div className="max-w-[1400px] mx-auto px-6 py-4">
@@ -46,13 +41,14 @@ export function Header({
 
           <div className="flex items-center gap-2">
             <Button
-              id="refresh-btn"
               variant="ghost"
               size="icon"
               className="rounded-lg hover:bg-gray-100 transition-all cursor-pointer"
-              onClick={handleRefresh}
+              onClick={onRefresh}
+              disabled={isRefreshing}
+              aria-busy={isRefreshing}
             >
-              <RefreshCw className="w-4 h-4 text-gray-600" />
+              <RefreshCw className={`w-4 h-4 text-gray-600 ${isRefreshing ? "animate-spin" : ""}`} />
             </Button>
             <Button
               variant="ghost"

@@ -1,13 +1,9 @@
 "use client"
 
-interface GlobalData {
-  total_market_cap: { usd: number }
-  total_volume: { usd: number }
-  market_cap_percentage: { btc: number; eth: number }
-}
+import type { GlobalMarketData } from "@/lib/crypto-api"
 
 interface GlobalStatsProps {
-  data: GlobalData | null
+  data: GlobalMarketData | null
   isLoading: boolean
 }
 

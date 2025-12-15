@@ -2,25 +2,15 @@
 
 import type React from "react"
 
-import { useState, useEffect, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { ChevronUp, ChevronDown, Heart, ChevronLeft, ChevronRight } from "lucide-react"
 import { Sparkline } from "@/components/sparkline"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useFavorites } from "@/hooks/use-favorites"
+import type { MarketCoin } from "@/lib/crypto-api"
 
-interface Coin {
-  id: string
-  market_cap_rank: number
-  name: string
-  symbol: string
-  current_price: number
-  price_change_percentage_1h_in_currency: number
-  price_change_percentage_24h: number
-  price_change_percentage_7d_in_currency: number
-  market_cap: number
-  sparkline_in_7d: { price: number[] }
-  image: string
-}
+type Coin = MarketCoin
 
 type SortKey =
   | "market_cap_rank"
@@ -41,9 +31,11 @@ interface CryptoTableProps {
 export function CryptoTable({ coins, isLoading, searchQuery }: CryptoTableProps) {
   const [sortKey, setSortKey] = useState<SortKey>("market_cap_rank")
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
-  const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(50)
+  const { favorites, toggleFavorite } = useFavorites()
+
+  const favoritesSet = useMemo(() => new Set(favorites), [favorites])
 
   useEffect(() => {
     setCurrentPage(1)
@@ -100,17 +92,9 @@ export function CryptoTable({ coins, isLoading, searchQuery }: CryptoTableProps)
     setItemsPerPage(Number(value))
   }
 
-  const toggleFavorite = (coinId: string, e: React.MouseEvent) => {
+  const handleToggleFavorite = (coinId: string, e: React.MouseEvent) => {
     e.stopPropagation()
-    setFavorites((prev) => {
-      const newFavorites = new Set(prev)
-      if (newFavorites.has(coinId)) {
-        newFavorites.delete(coinId)
-      } else {
-        newFavorites.add(coinId)
-      }
-      return newFavorites
-    })
+    toggleFavorite(coinId)
   }
 
   const SortIcon = ({ columnKey }: { columnKey: SortKey }) => {
@@ -122,13 +106,15 @@ export function CryptoTable({ coins, isLoading, searchQuery }: CryptoTableProps)
     )
   }
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (price: number | null | undefined) => {
+    if (price === null || price === undefined) return "-"
     if (price < 1) return `$${price.toFixed(6)}`
     if (price < 10) return `$${price.toFixed(4)}`
     return `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
   }
 
-  const formatMarketCap = (cap: number) => {
+  const formatMarketCap = (cap: number | null | undefined) => {
+    if (cap === null || cap === undefined) return "-"
     if (cap >= 1e12) return `$${(cap / 1e12).toFixed(2)}T`
     if (cap >= 1e9) return `$${(cap / 1e9).toFixed(2)}B`
     if (cap >= 1e6) return `$${(cap / 1e6).toFixed(2)}M`
@@ -236,7 +222,7 @@ export function CryptoTable({ coins, isLoading, searchQuery }: CryptoTableProps)
           </Select>
         </div>
         <div className="text-sm text-gray-500">
-          Showing 300 {filteredCoins.length === 1 ? "cryptocurrency" : "cryptocurrencies"}
+          Showing {filteredCoins.length} {filteredCoins.length === 1 ? "cryptocurrency" : "cryptocurrencies"}
         </div>
       </div>
 
@@ -300,7 +286,7 @@ export function CryptoTable({ coins, isLoading, searchQuery }: CryptoTableProps)
                   className="border-b border-gray-100 hover:bg-gray-50 transition-colors animate-fade-in"
                   style={{ animationDelay: `${index * 10}ms` }}
                 >
-                  <td className="px-4 py-5 text-sm text-gray-600 font-medium">{coin.market_cap_rank}</td>
+                  <td className="px-4 py-5 text-sm text-gray-600 font-medium">{coin.market_cap_rank ?? "-"}</td>
                   <td className="px-4 py-5">
                     <div className="flex items-center gap-3">
                       <img src={coin.image || "/placeholder.svg"} alt={coin.name} className="w-8 h-8 rounded-full" />
@@ -322,18 +308,18 @@ export function CryptoTable({ coins, isLoading, searchQuery }: CryptoTableProps)
                   <td className="px-4 py-5">
                     <div className="bg-gray-50 rounded-lg px-2 py-1">
                       <Sparkline
-                        data={coin.sparkline_in_7d.price}
-                        positive={coin.price_change_percentage_7d_in_currency >= 0}
+                        data={coin.sparkline_in_7d?.price || []}
+                        positive={(coin.price_change_percentage_7d_in_currency ?? 0) >= 0}
                       />
                     </div>
                   </td>
                   <td className="px-4 py-5">
                     <button
-                      onClick={(e) => toggleFavorite(coin.id, e)}
+                      onClick={(e) => handleToggleFavorite(coin.id, e)}
                       className="hover:scale-125 transition-transform active:scale-95 cursor-pointer"
                     >
                       <Heart
-                        className={`w-5 h-5 transition-all ${favorites.has(coin.id) ? "fill-red-500 text-red-500 animate-heart-pop" : "text-gray-400 hover:text-red-400"}`}
+                        className={`w-5 h-5 transition-all ${favoritesSet.has(coin.id) ? "fill-red-500 text-red-500 animate-heart-pop" : "text-gray-400 hover:text-red-400"}`}
                       />
                     </button>
                   </td>
