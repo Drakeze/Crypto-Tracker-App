@@ -1,9 +1,13 @@
-import { config as loadEnv } from "dotenv"
+import 'dotenv/config'
+import { defineConfig, env } from 'prisma/config'
 
-// Load environment variables for Prisma CLI usage without pulling in Next.js config.
-loadEnv()
-
-export default {
-  schema: "./prisma/schema.prisma",
-  // TODO: Add additional generators or split schemas when auth/multi-tenant support arrives.
-}
+export default defineConfig({
+  schema: 'prisma/schema.prisma',
+  migrations: {
+    path: 'prisma/migrations',
+  },
+  engine: "classic",
+  datasource: {
+    url: env('DATABASE_URL'),
+  },
+})
