@@ -1,0 +1,20 @@
+// Prisma schema configured for MongoDB only.
+// TODO: Extend models when user accounts and remote favorite syncing are added.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+model FavoriteCoin {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  coinId    String
+  symbol    String
+  createdAt DateTime @default(now())
+
+  /// TODO: link to users when authentication is introduced.
+}
