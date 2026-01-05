@@ -40,8 +40,20 @@ export function CryptoTracker() {
     fetchData()
   }, [])
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("crypto-theme")
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+    setIsDarkMode(savedTheme ? savedTheme === "dark" : prefersDark)
+  }, [])
+
+  useEffect(() => {
+    const root = document.documentElement
+    root.classList.toggle("dark", isDarkMode)
+    localStorage.setItem("crypto-theme", isDarkMode ? "dark" : "light")
+  }, [isDarkMode])
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background text-foreground transition-colors">
       <Header
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}

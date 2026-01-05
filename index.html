@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoTracker - Top 300 Cryptocurrencies</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">₿</span>
+                    <h1>CryptoTracker</h1>
+                </div>
+                <p class="subtitle">Top 300 Cryptocurrencies by Market Cap</p>
+            </div>
+        </header>
+
+        <!-- Controls Section -->
+        <section class="controls">
+            <div class="controls-left">
+                <div class="sort-control">
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select" class="sort-select">
+                        <option value="market_cap_desc">Market Cap (High to Low)</option>
+                        <option value="market_cap_asc">Market Cap (Low to High)</option>
+                        <option value="price_desc">Price (High to Low)</option>
+                        <option value="price_asc">Price (Low to High)</option>
+                        <option value="name_asc">Name (A-Z)</option>
+                        <option value="name_desc">Name (Z-A)</option>
+                        <option value="change_desc">24h Change (High to Low)</option>
+                        <option value="change_asc">24h Change (Low to High)</option>
+                        <option value="liked">Liked First</option>
+                    </select>
+                </div>
+                <div class="filter-control">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="show-liked-only">
+                        <span class="checkmark"></span>
+                        Show Liked Only
+                    </label>
+                </div>
+            </div>
+            <div class="controls-right">
+                <span id="coin-count" class="coin-count">0 coins</span>
+                <button id="refresh-btn" class="refresh-btn" title="Refresh Data">
+                    <svg class="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                    <span>Refresh</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Error Display -->
+        <div id="error-container" class="error-container hidden">
+            <div class="error-content">
+                <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <p id="error-message">An error occurred while fetching data.</p>
+                <button id="retry-btn" class="retry-btn">Try Again</button>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-container" class="loading-container">
+            <div class="spinner"></div>
+            <p class="loading-text">Loading cryptocurrencies...</p>
+            <p id="loading-status" class="loading-status">Fetching page 1 of 2...</p>
+        </div>
+
+        <!-- Coins Grid -->
+        <main id="coins-grid" class="coins-grid hidden">
+            <!-- Coins will be dynamically inserted here -->
+        </main>
+
+        <!-- Empty State for Liked Filter -->
+        <div id="empty-state" class="empty-state hidden">
+            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+            <h3>No Liked Coins Yet</h3>
+            <p>Click the heart icon on any coin to add it to your favorites.</p>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Data provided by <a href="https://www.coingecko.com" target="_blank" rel="noopener">CoinGecko API</a></p>
+            <p class="last-updated">Last updated: <span id="last-updated">Never</span></p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
