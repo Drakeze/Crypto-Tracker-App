@@ -6,19 +6,20 @@ import { CryptoTable } from "@/components/crypto-table"
 import { Header } from "@/components/header"
 import { Attribution } from "@/components/attribution"
 import { CryptoConverterModal } from "@/components/crypto-converter-modal"
-import type { GlobalMarketData, MarketCoin } from "@/lib/types/crypto"
 
 export function CryptoTracker() {
   const [searchQuery, setSearchQuery] = useState("")
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
-  const globalData: GlobalMarketData | null = null
-  const coins: MarketCoin[] = []
+  const globalData: Record<string, any> | null = null
+  const coins: Array<Record<string, any>> = []
   const isLoading = false
   const isRefreshing = false
   const errorMessage: string | null = null
 
-  const handleRefresh = () => {}
+  const handleRefresh = () => {
+    // TODO: Wire up data refresh when a new data source is integrated.
+  }
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("crypto-theme")
