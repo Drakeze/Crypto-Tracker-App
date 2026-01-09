@@ -9,7 +9,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
-import type { SortKey } from "@/lib/sort-utils"
+
+type SortKey =
+  | "market_cap_rank"
+  | "name"
+  | "current_price"
+  | "price_change_percentage_1h_in_currency"
+  | "price_change_percentage_24h"
+  | "price_change_percentage_7d_in_currency"
+  | "market_cap"
 
 interface CryptoFiltersProps {
   sortBy: SortKey
