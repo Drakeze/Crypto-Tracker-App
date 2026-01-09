@@ -4,11 +4,12 @@ import { CryptoSparkline } from "@/components/crypto-sparkline"
 import { Button } from "@/components/ui/button"
 import { Star, TrendingUp, TrendingDown } from "lucide-react"
 import { cn } from "@/lib/utils"
-import type { MarketCoin } from "@/lib/types/crypto"
 import { Skeleton } from "@/components/ui/skeleton"
 
+type CryptoTableCoin = Record<string, any>
+
 interface CryptoTableProps {
-  coins: MarketCoin[]
+  coins: CryptoTableCoin[]
   isLoading?: boolean
   searchQuery?: string
 }
