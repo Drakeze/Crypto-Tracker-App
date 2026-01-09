@@ -1,6 +1,6 @@
 import "server-only"
 
-import { FetchMarketParams, GlobalMarketData, type MarketCoin } from "@/lib/types/crypto"
+import { FetchMarketParams, GlobalMarketData, type MarketCoin } from "@/lib/crypto-api"
 
 const COINGECKO_BASE_URL = "https://api.coingecko.com/api/v3"
 
