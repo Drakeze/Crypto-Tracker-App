@@ -9,12 +9,3 @@ datasource db {
   provider = "mongodb"
   url      = env("MONGODB_URI")
 }
-
-model FavoriteCoin {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  coinId    String
-  symbol    String
-  createdAt DateTime @default(now())
-
-  /// TODO: link to users when authentication is introduced.
-}
