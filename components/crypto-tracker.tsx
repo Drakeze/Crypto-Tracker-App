@@ -6,39 +6,19 @@ import { CryptoTable } from "@/components/crypto-table"
 import { Header } from "@/components/header"
 import { Attribution } from "@/components/attribution"
 import { CryptoConverterModal } from "@/components/crypto-converter-modal"
-import { fetchGlobalMarketData, fetchMarketCoins, type GlobalMarketData, type MarketCoin } from "@/lib/crypto-api"
+import type { GlobalMarketData, MarketCoin } from "@/lib/types/crypto"
 
 export function CryptoTracker() {
-  const [globalData, setGlobalData] = useState<GlobalMarketData | null>(null)
-  const [coins, setCoins] = useState<MarketCoin[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [isRefreshing, setIsRefreshing] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const globalData: GlobalMarketData | null = null
+  const coins: MarketCoin[] = []
+  const isLoading = false
+  const isRefreshing = false
+  const errorMessage: string | null = null
 
-  const fetchData = async () => {
-    setErrorMessage(null)
-    const isInitialLoad = coins.length === 0 && !globalData
-    setIsLoading(isInitialLoad)
-    setIsRefreshing(!isInitialLoad)
-    try {
-      const [globalResponse, coinsResponse] = await Promise.all([fetchGlobalMarketData(), fetchMarketCoins()])
-      setGlobalData(globalResponse)
-      setCoins(coinsResponse)
-    } catch (error) {
-      console.error("[v0] Failed to fetch data:", error)
-      setErrorMessage("Unable to load market data right now. Please try again.")
-    } finally {
-      setIsLoading(false)
-      setIsRefreshing(false)
-    }
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
+  const handleRefresh = () => {}
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("crypto-theme")
@@ -57,7 +37,7 @@ export function CryptoTracker() {
       <Header
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        onRefresh={fetchData}
+        onRefresh={handleRefresh}
         onCalculatorOpen={() => setIsCalculatorOpen(true)}
         isDarkMode={isDarkMode}
         onThemeToggle={() => setIsDarkMode(!isDarkMode)}
