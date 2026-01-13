@@ -51,7 +51,8 @@ This project follows a **tool-assisted, developer-led workflow**.
 - All logic, architecture, and final implementations were reviewed and validated by me  
 
 ### API Validation
-- API endpoints were tested and verified using Postman  
+- API endpoints were tested and verified using **Postman**
+- Request/response structures and edge cases were validated prior to integration
 - Data handling and state flow were implemented manually within the application  
 
 AI and tooling were used to **increase development efficiency**, not replace engineering judgment.
@@ -172,5 +173,6 @@ This application is part of a broader portfolio that includes:
 ---
 
 ## 👤 Author
-Drakeze and DrakezeWind 
+
 Built and maintained as part of an ongoing professional development journey.
+
