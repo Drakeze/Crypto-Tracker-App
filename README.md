@@ -1,58 +1,176 @@
-# Crypto tracker app
+# 🪙 Crypto Tracker App
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+A modern cryptocurrency tracking application built with **Next.js**, focused on clean architecture, external API integration, and production-ready workflows.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/anthonysheadwork-1804s-projects/v0-crypto-tracker-app)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/l0i3IXHsiIZ)
+---
 
-## Overview
+## 📌 Overview
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+The Crypto Tracker App displays real-time cryptocurrency market data through a responsive web interface.
 
-## Deployment
+This project was built as part of my professional portfolio to demonstrate how I approach:
 
-Your project is live at:
+- Frontend architecture  
+- API integration  
+- Deployment-ready application design  
 
-**[https://vercel.com/anthonysheadwork-1804s-projects/v0-crypto-tracker-app](https://vercel.com/anthonysheadwork-1804s-projects/v0-crypto-tracker-app)**
+The emphasis is on **clarity, maintainability, and real-world development patterns**, rather than feature overload.
 
-## Build your app
+---
 
-Continue building your app on:
+## ✨ Key Features
 
-**[https://v0.app/chat/projects/l0i3IXHsiIZ](https://v0.app/chat/projects/l0i3IXHsiIZ)**
+- Real-time cryptocurrency market data  
+- External API integration  
+- Responsive, modern UI  
+- Environment-based configuration  
+- Deployed production build  
 
-## How It Works
+---
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+## 🌐 External Data Source
 
+This application retrieves market data from the **CoinGecko API**:
 
-## Optional database (MongoDB + Prisma)
+🔗 [CoinGecko API](https://www.coingecko.com/en/api)
 
-This app is **deployable with zero database configuration**. Database support is strictly opt-in so local-only usage, Vercel previews, or portfolio demos stay fast and fail-safe.
+CoinGecko provides free, reliable cryptocurrency market data and is commonly used in production and portfolio-grade applications.
 
-### Environment variables
+---
 
-- `NEXT_PUBLIC_COINGECKO_API_KEY`
-  - Optional CoinGecko API key for higher rate limits on the client.
-  - Safe to omit; the app falls back to unauthenticated requests without crashing.
-- `ENABLE_DB`  
-  - Optional boolean flag; set to `true` to enable MongoDB + Prisma.  
-  - Defaults to `false` when unset so builds never break due to missing secrets.
-- `MONGODB_URI`  
-  - Optional MongoDB connection string. Required only when `ENABLE_DB=true`.  
-  - When missing, database features are skipped and the app continues to work with in-memory/localStorage state.
+## 🧠 Development Approach
 
-### Runtime behavior
+This project follows a **tool-assisted, developer-led workflow**.
 
-- When `ENABLE_DB=false` (default), Prisma never initializes, API routes return friendly 503 messages for DB-only endpoints, and favorites stay in localStorage.
-- When `ENABLE_DB=true` **and** `MONGODB_URI` is set, Prisma initializes lazily at runtime; no Prisma code runs during `next build` or postinstall steps.
+### UI Exploration & Mockups
+- Initial layout inspiration and component ideas explored using v0.dev  
+- Final structure, styling decisions, and integration handled manually  
 
-### TODOs for future database work
+### AI-Assisted Review & Optimization
+- Codex was used for refactoring suggestions, optimization checks, and code review  
+- All logic, architecture, and final implementations were reviewed and validated by me  
 
-- TODO: Provide a migration + seed path once database persistence is enabled.
-- TODO: Sync localStorage favorites to the database when users sign in.
-- TODO: Add authentication/authorization before storing user-specific favorites.
+### API Validation
+- API endpoints were tested and verified using Postman  
+- Data handling and state flow were implemented manually within the application  
+
+AI and tooling were used to **increase development efficiency**, not replace engineering judgment.
+
+---
+
+## 🧰 Tech Stack
+
+### Frontend
+- Next.js  
+- TypeScript  
+- Tailwind CSS  
+
+### APIs
+- CoinGecko API  
+
+---
+
+> ## 🧰 Tooling & Infrastructure
+> 
+> **Runtime & Tooling**
+> - Bun (runtime & package management)
+> - Postman (API testing & validation)
+> - Codex (code review and optimization support)
+> 
+> **Infrastructure**
+> - Vercel (deployment)
+
+---
+
+> ## ▶️ Running the Project Locally
+> 
+> This project uses **Bun** as the runtime and package manager.
+> 
+> **Install Dependencies**
+> ```bash
+> bun install
+> ```
+> 
+> **Start Development Server**
+> ```bash
+> bun dev
+> ```
+> 
+> **Build for Production**
+> ```bash
+> bun run build
+> ```
+> 
+> **Start Production Server**
+> ```bash
+> bun start
+> ```
+
+Environment variables are used for configuration and should be defined locally when running the project.
+
+---
+
+## 🔄 How the Application Works
+
+- Cryptocurrency market data is fetched from the CoinGecko API  
+- Data-fetching logic is isolated from UI components  
+- UI components consume normalized data  
+- Environment variables manage configuration  
+- The application is deployed with production-safe defaults  
+
+---
+
+## 📍 Current Status
+
+- Core functionality implemented  
+- Fully deployed and accessible  
+- Actively maintained  
+
+This project is intentionally kept focused and stable.
+
+---
+
+## 🧭 Planned Improvements
+
+Future iterations will introduce backend persistence and expanded data handling:
+
+- Prisma ORM  
+- MongoDB database integration  
+- Improved caching and historical data storage  
+
+These components are **planned but not yet implemented**.
+
+---
+
+## 🤖 AI Usage Disclosure
+
+Portions of this project were developed with AI assistance, including code suggestions, refactoring support, and optimization checks.
+
+All architectural decisions, integrations, and final code were reviewed, modified, and approved by the author.
+
+AI was used as a productivity tool—not a substitute for engineering skill.
+
+---
+
+## 🎯 What This Project Demonstrates
+
+- Full-stack thinking with modern frontend tooling  
+- External API integration and validation  
+- Clean project organization  
+- Production deployment workflows  
+- Responsible and transparent AI-assisted development  
+
+---
+
+## 🔗 Related Projects
+
+This application is part of a broader portfolio that includes:
+- A personal developer portfolio site  
+- A full-stack blog platform  
+- A planned analytics/dashboard project  
+
+---
+
+## 👤 Author
+Drakeze and DrakezeWind 
+Built and maintained as part of an ongoing professional development journey.
