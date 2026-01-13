@@ -1,5 +1,7 @@
 import type { MarketCoin, MarketFetchConfig } from "@/lib/types/crypto"
 
+const COINGECKO_API_KEY = process.env.NEXT_PUBLIC_COINGECKO_API_KEY ?? ""
+
 const DEFAULT_CONFIG: MarketFetchConfig = {
   baseUrl: "https://api.coingecko.com/api/v3/coins/markets",
   vsCurrency: "usd",
@@ -30,7 +32,17 @@ export async function fetchWithRetry<T>(
 ): Promise<T> {
   for (let attempt = 1; attempt <= config.maxRetries; attempt += 1) {
     try {
-      const response = await fetch(url)
+      const apiKey = COINGECKO_API_KEY.trim()
+      const response = await fetch(
+        url,
+        apiKey
+          ? {
+              headers: {
+                "x-cg-demo-api-key": apiKey,
+              },
+            }
+          : undefined
+      )
 
       if (response.status === 429) {
         if (attempt < config.maxRetries) {

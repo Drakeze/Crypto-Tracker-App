@@ -1,7 +1,7 @@
 export function Attribution() {
   return (
     <div className="mt-16 pb-8 text-center">
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-muted-foreground">
         Data provided by{" "}
         <a
           href="https://www.coingecko.com/"
