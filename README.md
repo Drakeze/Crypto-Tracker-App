@@ -36,6 +36,9 @@ This app is **deployable with zero database configuration**. Database support is
 
 ### Environment variables
 
+- `NEXT_PUBLIC_COINGECKO_API_KEY`
+  - Optional CoinGecko API key for higher rate limits on the client.
+  - Safe to omit; the app falls back to unauthenticated requests without crashing.
 - `ENABLE_DB`  
   - Optional boolean flag; set to `true` to enable MongoDB + Prisma.  
   - Defaults to `false` when unset so builds never break due to missing secrets.
