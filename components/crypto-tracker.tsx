@@ -6,13 +6,14 @@ import { CryptoTable } from "@/components/crypto-table"
 import { Header } from "@/components/header"
 import { Attribution } from "@/components/attribution"
 import { CryptoConverterModal } from "@/components/crypto-converter-modal"
+import type { MarketCoin } from "@/lib/types/crypto"
 
 export function CryptoTracker() {
   const [searchQuery, setSearchQuery] = useState("")
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
   const globalData: Record<string, any> | null = null
-  const coins: Array<Record<string, any>> = []
+  const coins: MarketCoin[] = []
   const isLoading = false
   const isRefreshing = false
   const errorMessage: string | null = null
@@ -22,15 +23,23 @@ export function CryptoTracker() {
   }
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("crypto-theme")
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-    setIsDarkMode(savedTheme ? savedTheme === "dark" : prefersDark)
+    try {
+      const savedTheme = localStorage.getItem("crypto-theme")
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+      setIsDarkMode(savedTheme ? savedTheme === "dark" : prefersDark)
+    } catch (error) {
+      console.error("Error loading theme preference:", error)
+    }
   }, [])
 
   useEffect(() => {
     const root = document.documentElement
     root.classList.toggle("dark", isDarkMode)
-    localStorage.setItem("crypto-theme", isDarkMode ? "dark" : "light")
+    try {
+      localStorage.setItem("crypto-theme", isDarkMode ? "dark" : "light")
+    } catch (error) {
+      console.error("Error saving theme preference:", error)
+    }
   }, [isDarkMode])
 
   return (

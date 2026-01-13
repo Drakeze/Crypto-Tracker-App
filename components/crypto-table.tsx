@@ -2,11 +2,11 @@ import { useMemo } from "react"
 import { formatCurrency, formatPercentage } from "@/lib/utils"
 import { CryptoSparkline } from "@/components/crypto-sparkline"
 import { Button } from "@/components/ui/button"
-import { Star, TrendingUp, TrendingDown } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Star } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
+import type { MarketCoin } from "@/lib/types/crypto"
 
-type CryptoTableCoin = Record<string, any>
+type CryptoTableCoin = MarketCoin
 
 interface CryptoTableProps {
   coins: CryptoTableCoin[]
