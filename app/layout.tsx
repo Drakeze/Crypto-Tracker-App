@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "CryptoTracker Pro - Real-time Cryptocurrency Market Data",
   description:
     "Track 300+ cryptocurrencies with real-time prices, market caps, and 7-day sparklines. Professional SaaS-style crypto dashboard.",
-  generator: "v0.app",
+  generator: "Drakeze",
   icons: {
     icon: [
       {

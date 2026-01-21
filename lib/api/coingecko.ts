@@ -3,11 +3,15 @@ import type { MarketCoin, MarketFetchConfig } from "@/lib/types/crypto"
 const COINGECKO_API_KEY = process.env.NEXT_PUBLIC_COINGECKO_API_KEY ?? ""
 
 const DEFAULT_CONFIG: MarketFetchConfig = {
-  baseUrl: "https://api.coingecko.com/api/v3/coins/markets",
+  baseUrl: "https://api.coingecko.com/api/v3/simple/",
   vsCurrency: "usd",
   pages: [
-    { page: 1, perPage: 250 },
+    { page: 1, perPage: 50 },
     { page: 2, perPage: 50 },
+    { page: 3, perPage: 50 },
+    { page: 4, perPage: 50 },
+    { page: 5, perPage: 50 },
+    { page: 6, perPage: 50 },
   ],
   retryDelayMs: 60000,
   maxRetries: 3,
@@ -85,7 +89,7 @@ export async function fetchMarketPage(
   if (page === 2) {
     return data.map((coin, index) => ({
       ...coin,
-      market_cap_rank: 251 + index,
+      market_cap_rank: 51 + index,
     }))
   }
 
