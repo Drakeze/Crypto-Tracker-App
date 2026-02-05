@@ -19,31 +19,36 @@ const els = {
     retryBtn: document.getElementById('retryBtn')
 };
 
-// Fetch coins from backend (normalized response)
-async function fetchCoins() {
-    const allCoins = [];
+// Fetch normalized coin data from backend.
+async function fetchCoins({ forceRefresh = false } = {}) {
+    const refreshFlag = forceRefresh ? '&refresh=1' : '';
+    const res = await fetch(`/api/coins?vs_currency=usd${refreshFlag}`);
 
-    for (let page = 1; page <= 6; page++) {
-        els.status.textContent = `Fetching page ${page} of 6...`;
-
-        const res = await fetch(`/api/coins?page=${page}&per_page=50`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-        const json = await res.json();
-        allCoins.push(...json.data);
-
-        await new Promise(r => setTimeout(r, 500)); // rate limiting buffer
+    let json;
+    try {
+        json = await res.json();
+    } catch {
+        throw new Error(`Invalid JSON response (HTTP ${res.status})`);
     }
 
-    return allCoins;
+    if (!res.ok) {
+        throw new Error(json?.details || json?.error || `HTTP ${res.status}`);
+    }
+
+    if (!Array.isArray(json?.data)) {
+        throw new Error('Unexpected API shape: missing data array');
+    }
+
+    els.status.textContent = `Loaded from ${json.source || 'server'} (${json.count} coins)`;
+    return json.data;
 }
 
 // Load and render
-async function load() {
+async function load({ forceRefresh = false } = {}) {
     showLoading();
-    
+
     try {
-        coins = await fetchCoins();
+        coins = await fetchCoins({ forceRefresh });
         els.lastUpdate.textContent = new Date().toLocaleString();
         render();
         showGrid();
@@ -56,16 +61,16 @@ async function load() {
 function render() {
     let filtered = showFavsOnly ? coins.filter(c => favorites.has(c.id)) : coins;
     let sorted = sortCoins(filtered);
-    
+
     els.count.textContent = `${sorted.length} coins`;
-    
+
     if (!sorted.length && showFavsOnly) {
         showEmpty();
         return;
     }
-    
+
     els.grid.innerHTML = sorted.map(createCard).join('');
-    
+
     // Add event listeners
     document.querySelectorAll('.fav-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -159,6 +164,7 @@ function showLoading() {
     els.grid.classList.add('hidden');
     els.error.classList.add('hidden');
     els.empty.classList.add('hidden');
+    els.status.textContent = 'Loading crypto market data...';
 }
 
 function showGrid() {
@@ -174,6 +180,7 @@ function showError(msg) {
     els.error.classList.remove('hidden');
     els.empty.classList.add('hidden');
     els.errorMsg.textContent = `Error: ${msg}`;
+    els.status.textContent = 'Unable to load live data';
 }
 
 function showEmpty() {
@@ -194,8 +201,8 @@ els.showFavs.addEventListener('change', (e) => {
     render();
 });
 
-els.refreshBtn.addEventListener('click', load);
-els.retryBtn.addEventListener('click', load);
+els.refreshBtn.addEventListener('click', () => load({ forceRefresh: true }));
+els.retryBtn.addEventListener('click', () => load({ forceRefresh: true }));
 
 // Start
 load();
