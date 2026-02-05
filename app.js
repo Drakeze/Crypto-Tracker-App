@@ -19,22 +19,22 @@ const els = {
     retryBtn: document.getElementById('retryBtn')
 };
 
-// Fetch coins from backend
+// Fetch coins from backend (normalized response)
 async function fetchCoins() {
     const allCoins = [];
-    
+
     for (let page = 1; page <= 6; page++) {
         els.status.textContent = `Fetching page ${page} of 6...`;
-        
+
         const res = await fetch(`/api/coins?page=${page}&per_page=50`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        
-        const data = await res.json();
-        allCoins.push(...data);
-        
-        await new Promise(r => setTimeout(r, 500)); // Rate limit
+
+        const json = await res.json();
+        allCoins.push(...json.data);
+
+        await new Promise(r => setTimeout(r, 500)); // rate limiting buffer
     }
-    
+
     return allCoins;
 }
 
@@ -81,59 +81,55 @@ function render() {
     });
 }
 
-// Sort coins
 function sortCoins(coins) {
     const sorted = [...coins];
-    
+
     switch (currentSort) {
         case 'market_cap_desc':
-            return sorted.sort((a, b) => b.market_cap - a.market_cap);
+            return sorted.sort((a, b) => b.marketCap - a.marketCap);
         case 'market_cap_asc':
-            return sorted.sort((a, b) => a.market_cap - b.market_cap);
+            return sorted.sort((a, b) => a.marketCap - b.marketCap);
         case 'price_desc':
-            return sorted.sort((a, b) => b.current_price - a.current_price);
+            return sorted.sort((a, b) => b.price - a.price);
         case 'price_asc':
-            return sorted.sort((a, b) => a.current_price - b.current_price);
+            return sorted.sort((a, b) => a.price - b.price);
         case 'change_desc':
-            return sorted.sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h);
+            return sorted.sort((a, b) => b.change24h - a.change24h);
         case 'change_asc':
-            return sorted.sort((a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h);
+            return sorted.sort((a, b) => a.change24h - b.change24h);
         default:
             return sorted;
     }
 }
 
-// Create card HTML
 function createCard(coin) {
-    const change = coin.price_change_percentage_24h || 0;
+    const change = coin.change24h ?? 0;
     const isFav = favorites.has(coin.id);
-    
+
     return `
         <div class="card">
             <div class="card-header">
                 <img src="${coin.image}" alt="${coin.name}">
                 <div class="card-info">
                     <div class="card-name">${coin.name}</div>
-                    <div class="card-symbol">${coin.symbol}</div>
+                    <div class="card-symbol">${coin.symbol.toUpperCase()}</div>
                 </div>
                 <button class="fav-btn ${isFav ? 'active' : ''}" data-id="${coin.id}">♥</button>
             </div>
             <div class="card-stats">
                 <div class="stat">
                     <span class="stat-label">Price</span>
-                    <span class="stat-value">${formatPrice(coin.current_price)}</span>
+                    <span class="stat-value">${formatPrice(coin.price)}</span>
                 </div>
                 <div class="stat">
                     <span class="stat-label">24h Change</span>
-                    <span class="stat-value ${change >= 0 ? 'positive' : 'negative'}">${change.toFixed(2)}%</span>
+                    <span class="stat-value ${change >= 0 ? 'positive' : 'negative'}">
+                        ${change.toFixed(2)}%
+                    </span>
                 </div>
                 <div class="stat">
                     <span class="stat-label">Market Cap</span>
-                    <span class="stat-value">${formatLarge(coin.market_cap)}</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-label">Volume</span>
-                    <span class="stat-value">${formatLarge(coin.total_volume)}</span>
+                    <span class="stat-value">${formatLarge(coin.marketCap)}</span>
                 </div>
             </div>
         </div>
