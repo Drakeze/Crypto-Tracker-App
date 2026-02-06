@@ -1,6 +1,6 @@
 # 🪙 Crypto Tracker App
 
-A modern cryptocurrency tracking application built with **Next.js**, focused on clean architecture, external API integration, and production-ready workflows.
+A lightweight cryptocurrency tracking application built with **HTML, CSS, and vanilla JavaScript**, focused on clean structure, external API integration, and production-ready frontend practices.
 
 ---
 
@@ -10,21 +10,21 @@ The Crypto Tracker App displays real-time cryptocurrency market data through a r
 
 This project was built as part of my professional portfolio to demonstrate how I approach:
 
-- Frontend architecture  
-- API integration  
-- Deployment-ready application design  
+- Frontend fundamentals  
+- External API consumption  
+- Clean, maintainable UI logic  
 
-The emphasis is on **clarity, maintainability, and real-world development patterns**, rather than feature overload.
+The emphasis is on **clarity, correctness, and real-world patterns**, rather than framework complexity or feature overload.
 
 ---
 
 ## ✨ Key Features
 
 - Real-time cryptocurrency market data  
-- External API integration  
+- External API integration (fetch-based)  
 - Responsive, modern UI  
-- Environment-based configuration  
-- Deployed production build  
+- Clear separation between data logic and presentation  
+- Deployed as a static frontend application  
 
 ---
 
@@ -32,7 +32,7 @@ The emphasis is on **clarity, maintainability, and real-world development patter
 
 This application retrieves market data from the **CoinGecko API**:
 
-🔗 [CoinGecko API](https://www.coingecko.com/en/api)
+🔗 https://www.coingecko.com/en/api
 
 CoinGecko provides free, reliable cryptocurrency market data and is commonly used in production and portfolio-grade applications.
 
@@ -40,139 +40,102 @@ CoinGecko provides free, reliable cryptocurrency market data and is commonly use
 
 ## 🧠 Development Approach
 
-This project follows a **tool-assisted, developer-led workflow**.
+This project follows a **frontend-first, fundamentals-driven workflow**.
 
-### UI Exploration & Mockups
-- Initial layout inspiration and component ideas explored using v0.dev  
-- Final structure, styling decisions, and integration handled manually  
+### UI Exploration & Layout Planning
+- Initial layout ideas and visual direction were explored using design and prototyping tools  
+- Final HTML structure, CSS styling, and responsive behavior were implemented manually  
 
-### AI-Assisted Review & Optimization
-- Codex was used for refactoring suggestions, optimization checks, and code review  
-- All logic, architecture, and final implementations were reviewed and validated by me  
+### JavaScript Architecture
+- Data-fetching logic is isolated from DOM rendering  
+- API responses are normalized before being passed to the UI  
+- DOM updates are handled explicitly to keep behavior predictable and debuggable  
 
 ### API Validation
-- API endpoints were tested and verified using **Postman**
-- Request/response structures and edge cases were validated prior to integration
-- Data handling and state flow were implemented manually within the application  
+- API endpoints were tested using **Postman** before integration  
+- Response structures and edge cases were reviewed prior to wiring data into the UI  
 
-AI and tooling were used to **increase development efficiency**, not replace engineering judgment.
+Tooling was used to **validate assumptions and speed up iteration**, not replace engineering decisions.
 
 ---
 
 ## 🧰 Tech Stack
 
 ### Frontend
-- Next.js  
-- TypeScript  
-- Tailwind CSS  
+- HTML5  
+- CSS3  
+- JavaScript (ES6+)  
 
 ### APIs
 - CoinGecko API  
 
 ---
 
-> ## 🧰 Tooling & Infrastructure
-> 
-> **Runtime & Tooling**
-> - Bun (runtime & package management)
-> - Postman (API testing & validation)
-> - Codex (code review and optimization support)
-> 
-> **Infrastructure**
-> - Vercel (deployment)
+## ▶️ Running the Project Locally
+
+This project does not require a build step or framework runtime.
+
+### Option 1: Open directly
+### Option 2: Local server (recommended)
+```bash
+npx serve
+Running a local server avoids CORS issues when working with APIs.
+```
+---
+
+### 🔄 How the Application Works
+	•	Cryptocurrency market data is fetched from the CoinGecko API
+	•	JavaScript handles data retrieval and transformation
+	•	UI components are rendered using DOM manipulation
+	•	Styling and layout are handled entirely with CSS
+	•	The app is deployed as a static frontend
 
 ---
 
-> ## ▶️ Running the Project Locally
-> 
-> This project uses **Bun** as the runtime and package manager.
-> 
-> **Install Dependencies**
-> ```bash
-> bun install
-> ```
-> 
-> **Start Development Server**
-> ```bash
-> bun dev
-> ```
-> 
-> **Build for Production**
-> ```bash
-> bun run build
-> ```
-> 
-> **Start Production Server**
-> ```bash
-> bun start
-> ```
+### 📍 Current Status
+	•	Core functionality implemented
+	•	Stable and deployed
+	•	Actively maintained
 
-Environment variables are used for configuration and should be defined locally when running the project.
+This project is intentionally kept focused and minimal.
 
 ---
 
-## 🔄 How the Application Works
+### 🧭 Planned Improvements
 
-- Cryptocurrency market data is fetched from the CoinGecko API  
-- Data-fetching logic is isolated from UI components  
-- UI components consume normalized data  
-- Environment variables manage configuration  
-- The application is deployed with production-safe defaults  
+Future iterations may introduce:
+	•	Client-side caching
+	•	Expanded market views
+	•	Historical data visualization
+	•	Optional backend persistence
 
----
-
-## 📍 Current Status
-
-- Core functionality implemented  
-- Fully deployed and accessible  
-- Actively maintained  
-
-This project is intentionally kept focused and stable.
+These features are planned but not yet implemented.
 
 ---
 
-## 🧭 Planned Improvements
+### 🤖 AI Usage Disclosure
 
-Future iterations will introduce backend persistence and expanded data handling:
+Portions of this project were developed with AI assistance, including:
+	•	Code review and refactoring suggestions
+	•	Optimization checks
+	•	Architecture feedback
 
-- Prisma ORM  
-- MongoDB database integration  
-- Improved caching and historical data storage  
+All logic, structure, and final implementations were reviewed, modified, and approved by the author.
 
-These components are **planned but not yet implemented**.
-
----
-
-## 🤖 AI Usage Disclosure
-
-Portions of this project were developed with AI assistance, including code suggestions, refactoring support, and optimization checks.
-
-All architectural decisions, integrations, and final code were reviewed, modified, and approved by the author.
-
-AI was used as a productivity tool—not a substitute for engineering skill.
+AI was used as a productivity aid, not a substitute for engineering judgment.
 
 ---
 
-## 🎯 What This Project Demonstrates
-
-- Full-stack thinking with modern frontend tooling  
-- External API integration and validation  
-- Clean project organization  
-- Production deployment workflows  
-- Responsible and transparent AI-assisted development  
-
----
-
-## 🔗 Related Projects
-
-This application is part of a broader portfolio that includes:
-- A personal developer portfolio site  
-- A full-stack blog platform  
-- A planned analytics/dashboard project  
+### 🎯 What This Project Demonstrates
+	•	Strong frontend fundamentals without framework reliance
+	•	External API integration and validation
+	•	Clean separation of concerns in vanilla JavaScript
+	•	Production-ready static deployment practices
+	•	Responsible and transparent AI-assisted development
 
 ---
 
-## 👤 Author
+### 👤 Author
 
 Built and maintained as part of an ongoing professional development journey.
 
