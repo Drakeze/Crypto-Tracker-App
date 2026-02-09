@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Tracker - Real-time Cryptocurrency Prices</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="logo">
+          <span class="logo-icon">₿</span>
+          Crypto Tracker
+        </h1>
+        <div class="header-actions">
+          <button class="btn btn-refresh" id="refreshBtn" title="Refresh data">
+            <span class="refresh-icon">↻</span> Refresh
+          </button>
+          <button class="btn btn-theme" id="themeToggle" title="Toggle theme">
+            <span class="theme-icon">🌙</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      <!-- Controls Section -->
+      <div class="controls">
+        <div class="search-filter">
+          <input type="text" id="searchInput" class="search-input" placeholder="Search coins...">
+          <div class="filter-buttons">
+            <button class="btn btn-filter active" data-filter="all">All</button>
+            <button class="btn btn-filter" data-filter="favorites">
+              <span class="heart-icon">♥</span> Favorites
+            </button>
+            <button class="btn btn-filter" data-filter="gainers">Top Gainers</button>
+            <button class="btn btn-filter" data-filter="losers">Top Losers</button>
+          </div>
+        </div>
+        <div class="sort-section">
+          <label for="sortSelect">Sort by:</label>
+          <select id="sortSelect" class="sort-select">
+            <option value="market_cap_rank">Market Cap Rank</option>
+            <option value="price_desc">Price (High to Low)</option>
+            <option value="price_asc">Price (Low to High)</option>
+            <option value="change_desc">24h Change (High to Low)</option>
+            <option value="change_asc">24h Change (Low to High)</option>
+            <option value="name_asc">Name (A-Z)</option>
+            <option value="name_desc">Name (Z-A)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Loading cryptocurrency data...</p>
+      </div>
+
+      <!-- Error State -->
+      <div class="error" id="error" style="display: none;">
+        <p class="error-message"></p>
+        <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
+      </div>
+
+      <!-- Coins Grid -->
+      <div class="coins-grid" id="coinsGrid"></div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination">
+        <button class="btn btn-page" id="prevBtn">← Previous</button>
+        <div class="page-numbers" id="pageNumbers"></div>
+        <button class="btn btn-page" id="nextBtn">Next →</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Calculator Modal -->
+  <div class="modal" id="calculatorModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Coin Calculator</h2>
+        <button class="modal-close" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="calculator-coin-info">
+          <img id="calcCoinImage" src="" alt="" class="calc-coin-image">
+          <div>
+            <h3 id="calcCoinName"></h3>
+            <p id="calcCoinSymbol"></p>
+          </div>
+        </div>
+        <div class="calculator-input">
+          <label for="coinAmount">Amount of coins:</label>
+          <input type="number" id="coinAmount" value="1" min="0" step="0.01">
+        </div>
+        <div class="calculator-results">
+          <h3>Value in different currencies:</h3>
+          <div class="currency-list">
+            <div class="currency-item">
+              <span class="currency-label">USD ($)</span>
+              <span class="currency-value" id="valueUSD">$0.00</span>
+            </div>
+            <div class="currency-item">
+              <span class="currency-label">EUR (€)</span>
+              <span class="currency-value" id="valueEUR">€0.00</span>
+            </div>
+            <div class="currency-item">
+              <span class="currency-label">GBP (£)</span>
+              <span class="currency-value" id="valueGBP">£0.00</span>
+            </div>
+            <div class="currency-item">
+              <span class="currency-label">BTC (₿)</span>
+              <span class="currency-value" id="valueBTC">₿0.00000000</span>
+            </div>
+            <div class="currency-item">
+              <span class="currency-label">ETH (Ξ)</span>
+              <span class="currency-value" id="valueETH">Ξ0.00000000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
